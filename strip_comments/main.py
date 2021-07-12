@@ -11,12 +11,17 @@ def strip(txt: str, markers: list):
         else:
             result.append(line)
 
-    txt = [line.strip() + '\n' for line in result]
-    result = ''.join(txt)
-    if len(result) == 1:
-        return result
+    txt = ''.join([line.strip() + '\n' for line in result])
+
+    if validate(txt, markers):
+        return strip(txt, markers)
     else:
-        return result.strip()
+        return txt.strip()
 
 
-print(strip("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"]))
+def validate(txt: str, markers: list):
+    for marker in markers:
+        if marker in txt:
+            return True
+    else:
+        return False
